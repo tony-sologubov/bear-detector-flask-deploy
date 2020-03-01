@@ -38,11 +38,11 @@ def predict():
 
         if file:
             filename = file.filename
-            file.save(os.path.join("resources/bears", filename))
+            file.save(os.path.join("resources/tmp", filename))
 
         #fastai predicts from a pandas series. so converting the list to a series
         #to_predict = "resources/bears/teddy/images586.jpg"
-        to_predict = "resources/bears/"+filename
+        to_predict = "resources/tmp/"+filename
 
         #Getting the prediction from the model and rounding the float into 2 decimal places
         prediction=model.predict(to_predict)
