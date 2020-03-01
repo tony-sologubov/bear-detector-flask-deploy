@@ -15,6 +15,39 @@ Path().ls(file_exts='.pkl')
 
 app = Flask(__name__)
 
-learn_inf = load_learner(path/'model/export.pkl')
+model = load_learner(path/'model/export.pkl')
 
-print(learn_inf.predict('resources/bears/teddy/images586.jpg'))
+
+
+#Defining the home page for the web service
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+#Writing api for inference using the loaded model
+@app.route('/predict',methods=['POST'])
+
+#Defining the predict method get input from the html page and to predict using the trained model
+
+def predict():
+    
+        labels = ['grizzly','black','teddy']
+        #Collecting values from the html form and converting into respective types as expected by the model
+        #Brand =  request.form["Brand"]
+
+        #fastai predicts from a pandas series. so converting the list to a series
+        to_predict = "resources/bears/teddy/images586.jpg"
+        to_predict = "resources/bears/black/Black20Bear206402.jpg"
+
+        #Getting the prediction from the model and rounding the float into 2 decimal places
+        prediction=model.predict(to_predict)
+
+        print("result: ",prediction[0])
+
+
+        #return render_template('index.html', prediction_text='Your Prediction :  {} '.format(prediction))
+
+
+if __name__ == "__main__":
+    #predict()
+    app.run(debug=True)
