@@ -10,9 +10,11 @@ import os
 
 
 cwd = os.getcwd()
-path = cwd + '/model'
+path = Path()
+Path().ls(file_exts='.pkl')
 
 app = Flask(__name__)
 
-learn_inf = load_learner('model\export.pkl')
+learn_inf = load_learner(path/'model/export.pkl')
 
+print(learn_inf.predict('resources/bears/teddy/images586.jpg'))
