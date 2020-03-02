@@ -1,6 +1,7 @@
 **Deploying Flash + Gunicorn + Nginx + https + domain**
-
 Created by Javier Ideami - March 2, 2020
+
+![Image of cute bear](https://github.com/javismiles/bear-detector-flask-deploy/blob/master/resources/bears/cutebear.jpg?raw=true)
 
 The objective of this project is to deploy a Flask app that uses a model trained with the Fast.ai v2 library following an example in the upcoming book &quot;Deep Learning for Coders with fastai and PyTorch: AI Applications Without a PhD&quot; by Jeremy Howard and Sylvain Gugger.
 
