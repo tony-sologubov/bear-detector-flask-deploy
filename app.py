@@ -13,19 +13,19 @@ cwd = os.getcwd()
 path = Path()
 Path().ls(file_exts='.pkl')
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 model = load_learner(path/'model/export.pkl')
 
 
 
 #Defining the home page for the web service
-@app.route('/')
+@application.route('/')
 def home():
     return render_template('index.html')
 
 #Writing api for inference using the loaded model
-@app.route('/predict',methods=['POST'])
+@application.route('/predict',methods=['POST'])
 
 #Defining the predict method get input from the html page and to predict using the trained model
 
@@ -54,4 +54,4 @@ def predict():
 
 if __name__ == "__main__":
     #predict()
-    app.run(debug=True)
+    application.run(host='0.0.0.0')

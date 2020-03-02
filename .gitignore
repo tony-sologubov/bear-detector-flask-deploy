@@ -2,3 +2,7 @@ resources/bearstotal.zip
 resources/model.pkl
 resources/.ipynb_checkpoints
 resources/__pycache__
+app.sock
+myprojectenv2
+myprojectenv2/
+
