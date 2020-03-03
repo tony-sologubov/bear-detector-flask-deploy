@@ -67,7 +67,7 @@ Create a wsgi entry point, file wsgi.py in the root of the repo
 
 The file contains just this:
 
-_from myproject import application_
+_from app import application_
 
 _if \_\_name\_\_ == &quot;\_\_main\_\_&quot;:_
 
@@ -107,9 +107,9 @@ _WantedBy=multi-user.target_
 
 **Start the system process which will create a unix socket file in our app folder and bind to it.**
 
-sudo systemctl start myproject
+sudo systemctl start app
 
-sudo systemctl enable myproject
+sudo systemctl enable app
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
