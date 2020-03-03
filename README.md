@@ -67,11 +67,11 @@ Create a wsgi entry point, file wsgi.py in the root of the repo
 
 The file contains just this:
 
-_from app import application_
-
-_if \_\_name\_\_ == &quot;\_\_main\_\_&quot;:_
-
-_    application.run()_
+```
+from myproject import application
+if __name__ == "__main__":
+    application.run()
+```
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
