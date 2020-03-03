@@ -68,7 +68,7 @@ Create a wsgi entry point, file wsgi.py in the root of the repo
 The file contains just this:
 
 ```
-from myproject import application
+from app import application
 if __name__ == "__main__":
     application.run()
 ```
@@ -80,28 +80,21 @@ if __name__ == "__main__":
 Create a systemd unit file called app.service in /etc/systemd/system
 
 It contains this:
+```
+[Unit]
+Description=Gunicorn instance to serve my app
+After=network.target
 
-_[Unit]_
+[Service]
+User=root
+Group=nginx
+WorkingDirectory=path-to-your-app
+Environment="PATH=path-to-your-app/myprojectenv/bin"
+ExecStart=path-to-your-app/myprojectenv/bin/gunicorn --workers 3 --bind unix:app.sock -m 007 wsgi
 
-_Description=Gunicorn instance to serve my app_
-
-_After=network.target_
-
-_[Service]_
-
-_User=root_
-
-_Group=nginx_
-
-_WorkingDirectory=path-to-your-app_
-
-_Environment=&quot;PATH=path-to-your-app/myprojectenv/bin&quot;_
-
-_ExecStart=path-to-your-app/myprojectenv/bin/gunicorn --workers 3 --bind unix:app.sock -m 007 wsgi_
-
-_[Install]_
-
-_WantedBy=multi-user.target_
+[Install]
+WantedBy=multi-user.target
+```
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -125,73 +118,58 @@ Open the nginx configuration file of your server, or of the domain where you wan
 
 **You can add a brand new section above the standard one:**
 
-_server {_
+```
+server {
+    listen 80;
+    server_name server_domain_or_IP;
 
-_    listen 80;_
-
-_    server\_name server\_domain\_or\_IP;_
-
-_    location / {_
-
-_        proxy\_set\_header Host $http\_host;_
-
-_        proxy\_set\_header X-Real-IP $remote\_addr;_
-
-_        proxy\_set\_header X-Forwarded-For $proxy\_add\_x\_forwarded\_for;_
-
-_        proxy\_set\_header X-Forwarded-Proto $scheme;_
-
-_        proxy\_pass http://unix:path-to-your-app/app.sock;_
-
-_    }_
-
-_}_
+    location / {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://unix:path-to-your-app/app.sock;
+    }
+}
+```
 
 **Or you can also just add the location section to an existing server section.**
 
 **This would be the beginning of a server section for the https ssl access of the domain:**
 
-_server {_
+```
+server {
+        listen x.x.x.x:443 ssl http2;
 
-_        listen x.x.x.x:443 ssl http2;_
-
-_        server\_name whatever.com;_
-
-_        server\_name www.whatever.com;_
-
-_        server\_name ipv4.whatever.com;_
-
-_…………………._
+        server_name whatever.com;
+        server_name www.whatever.com;
+        server_name ipv4.whatever.com;
+…………………
+```
 
 **And this would be the beginning of a server section for the http access of the domain:**
 
-_server {_
+```
+server {
+        listen x.x.x.x:80;
 
-_        listen x.x.x.x:80;_
-
-_        server\_name whatever.com;_
-
-_        server\_name www.whatever.com;_
-
-_        server\_name ipv4.whatever.com;_
-
-_…………………._
+        server_name whatever.com;
+        server_name www.whatever.com;
+        server_name ipv4.whatever.com;
+…………………
+```
 
 **And you could add just the location part inside one of them:**
 
-_location / {_
-
-_        proxy\_set\_header Host $http\_host;_
-
-_        proxy\_set\_header X-Real-IP $remote\_addr;_
-
-_        proxy\_set\_header X-Forwarded-For $proxy\_add\_x\_forwarded\_for;_
-
-_        proxy\_set\_header X-Forwarded-Proto $scheme;_
-
-_        proxy\_pass http://unix:path-to-your-app/app.sock;_
-
-_    }_
+```
+location / {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://unix:path-to-your-app/app.sock;
+    }
+```
 
 This way you point either the root of the domain or another path within the domain to the flask app.
 
