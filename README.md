@@ -1,6 +1,6 @@
 **Deploying Flash + Gunicorn + Nginx + https + domain**
 
-Created by Javier Ideami - March 2, 2020
+By Javier Ideami - March 2, 2020
 
 **The jupyter notebook to train the model used by the flask app can be accessed here:**
 [Jupyter Notebook](https://github.com/javismiles/bear-detector-flask-deploy/blob/master/resources/model.ipynb)
