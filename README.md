@@ -2,6 +2,8 @@
 
 Created by Javier Ideami - March 2, 2020
 
+**The jupyter notebook to train the model used by the flask app can be accessed here:**
+[Jupyter Notebook to train the model with Fastai v2](https://github.com/javismiles/bear-detector-flask-deploy/blob/master/resources/model.ipynb)
 ![Image of cute bear](https://github.com/javismiles/bear-detector-flask-deploy/blob/master/resources/bears/cutebear.jpg?raw=true)
 
 **The jupyter notebook to train the model used by the flask app can be accessed here:**
