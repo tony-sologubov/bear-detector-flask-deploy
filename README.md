@@ -215,54 +215,75 @@ This allows you to quickly launch it in any environment or operating system, mak
 
 **To dockerize the app, create a Dockerfile at the root of the project:**
 ```
-FROM python:3_
-WORKDIR /usr/src/app_
-COPY requirements.txt ./_
-RUN pip install --no-cache-dir -r requirements.txt_
-COPY model ./model/_
-COPY resources/utils.py ./resources/_
-COPY \*.py ./_
-COPY templates ./templates/_
-RUN mkdir resources/tmp_
-RUN mkdir resources/tmp2_
-CMD [&quot;gunicorn&quot;  , &quot;-b&quot;, &quot;0.0.0.0:8500&quot;, &quot;wsgi&quot;]_
+FROM python:3
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY model ./model/
+COPY resources/utils.py ./resources/
+COPY *.py ./
+COPY templates ./templates/
+
+RUN mkdir resources/tmp
+RUN mkdir resources/tmp2
+
+CMD ["gunicorn"  , "-b", "0.0.0.0:8500", "wsgi"]
+
 ```
 
 
 **Then create a docker-compose.yml file**
 ```
-version: &#39;3.3&#39;_
+version: '3.3'
 
-services:_
-    app:_
-        image: javismiles/beardetector:latest_
+services:
+    app:
+        image: javismiles/beardetector:latest
         build:
             context: .
         ports:
-            - 8500:8500_
+            - 8500:8500
 ```
 
 
 **Delete existing containers**
+
 docker container rm -f $(docker container ls -aq)
 
+
 **Build the image and launch it all at once with docker-compose**
+
 docker-compose up -d --build
 
+
 **At this point you can access the app on:**
+
 http://localhost:8500
 
+
 **Attach the app to a domain with an ssl certificate**
+
 If you want to attach the app to domain name with an ssl certificate you can do the same we did in the deployment instructions for Flask and Gunicorn, editing the nginx.conf file of the domain name you want to use.
 
+
 **Upload the image to your account un hub.docker.com, so that you can pull it from anywhere else and launch it anywhere else:**
+
 docker image push javismiles/beardetector:latest
 
+
 **You can pull the example image I created (or another that you create and upload to hub.docker.com) doing this:**
+
 docker image pull  javismiles/beardetector:latest
 
+
 **And run it with:**
+
 docker container run -d --rm -p 8500:8500 javismiles/beardetector:latest
 
+
 **Then you can access it on:**
+
 http://localhost:8500
