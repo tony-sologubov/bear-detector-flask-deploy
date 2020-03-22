@@ -204,3 +204,162 @@ sudo systemctl status nginx
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 **Now you can go to your domain address and access the app**
+
+___________________________________________________________
+
+**Dockerizing bear app**
+
+You can dockerize your bear app.
+
+This allows you to quickly launch it in any environment or operating system, making it truly portable.
+
+**To dockerize the app, create a Dockerfile at the root of the project:**
+
+_FROM python:3_
+
+_WORKDIR /usr/src/app_
+
+_COPY requirements.txt ./_
+
+_RUN pip install --no-cache-dir -r requirements.txt_
+
+_COPY model ./model/_
+
+_COPY resources/utils.py ./resources/_
+
+_COPY \*.py ./_
+
+_COPY templates ./templates/_
+
+_RUN mkdir resources/tmp_
+
+_RUN mkdir resources/tmp2_
+
+_CMD [&quot;gunicorn&quot;  , &quot;-b&quot;, &quot;0.0.0.0:8500&quot;, &quot;wsgi&quot;]_
+
+
+
+**Then create a docker-compose.yml file**
+
+_version: &#39;3.3&#39;_
+
+_services:_
+
+_    app:_
+
+_        image: javismiles/beardetector:latest_
+
+_        build:_
+
+_            context: ._
+
+_        ports:_
+
+_            - 8500:8500_
+
+
+
+**Delete existing containers**
+_docker container rm -f $(docker container ls -aq)_
+
+**Build the image and**** launch it all at once with docker-compose**
+
+_docker-compose up -d --build_
+
+**At this point you can access the app on:**
+
+[http://localhost:8500/](http://posterini.com:8500/)
+
+**Attach the app to a domain with an ssl certificate**
+
+If you want to attach the app to domain name with an ssl certificate you can do the same we did in the deployment instructions for Flask and Gunicorn, editing the nginx.conf file of the domain name you want to use.
+
+**Upload the image to your account un hub.docker.com, so that you can pull it from anywhere else and launch it anywhere else:**
+_docker image push javismiles/beardetector:latest_
+
+**You can pull the example image I created (or another that you create and upload to hub.docker.com) doing this:**
+_docker image pull  javismiles/beardetector:latest_
+
+**And run it with:**
+
+_docker container run -d --rm -p 8500:8500 javismiles/beardetector:latest_
+
+**Then you can access it on:**
+
+_http://localhost:8500_
+Rendered
+Dockerizing bear app
+
+You can dockerize your bear app.
+
+This allows you to quickly launch it in any environment or operating system, making it truly portable.
+
+To dockerize the app, create a Dockerfile at the root of the project:
+
+FROM python:3
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY model ./model/
+
+COPY resources/utils.py ./resources/
+
+COPY *.py ./
+
+COPY templates ./templates/
+
+RUN mkdir resources/tmp
+
+RUN mkdir resources/tmp2
+
+CMD ["gunicorn" , "-b", "0.0.0.0:8500", "wsgi"]
+
+Then create a docker-compose.yml file
+
+version: '3.3'
+
+services:
+
+_ app:_
+
+_ image: javismiles/beardetector:latest_
+
+_ build:_
+
+_ context: ._
+
+_ ports:_
+
+_ - 8500:8500_
+
+Delete existing containers docker container rm -f $(docker container ls -aq)
+
+Build the image and** launch it all at once with docker-compose**
+
+docker-compose up -d --build
+
+At this point you can access the app on:
+
+http://localhost:8500/
+
+Attach the app to a domain with an ssl certificate
+
+If you want to attach the app to domain name with an ssl certificate you can do the same we did in the deployment instructions for Flask and Gunicorn, editing the nginx.conf file of the domain name you want to use.
+
+Upload the image to your account un hub.docker.com, so that you can pull it from anywhere else and launch it anywhere else: docker image push javismiles/beardetector:latest
+
+You can pull the example image I created (or another that you create and upload to hub.docker.com) doing this: docker image pull javismiles/beardetector:latest
+
+And run it with:
+
+docker container run -d --rm -p 8500:8500 javismiles/beardetector:latest
+
+Then you can access it on:
+
+http://localhost:8500
+
+
