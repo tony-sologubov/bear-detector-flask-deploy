@@ -228,7 +228,6 @@ COPY *.py ./
 COPY templates ./templates/
 
 RUN mkdir resources/tmp
-RUN mkdir resources/tmp2
 
 CMD ["gunicorn"  , "-b", "0.0.0.0:8500", "wsgi"]
 
