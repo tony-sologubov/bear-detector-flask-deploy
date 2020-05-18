@@ -10,3 +10,4 @@ graphviz
 fastai2
 ipykernel
 resources
+staty
