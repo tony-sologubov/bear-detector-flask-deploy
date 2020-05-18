@@ -11,3 +11,8 @@ fastai2
 ipykernel
 resources
 staty
+jupyter
+azure-cognitiveservices-vision-customvision
+azure-cognitiveservices-vision-computervision
+azure-cognitiveservices-search-websearch
+azure-cognitiveservices-search-imagesearch
