@@ -10,7 +10,6 @@ graphviz
 fastai2
 ipykernel
 resources
-resources.utils
 staty
 jupyter
 azure-cognitiveservices-vision-customvision
