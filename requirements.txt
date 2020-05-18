@@ -1,5 +1,4 @@
 resources
-resources.utils
 flask
 gunicorn
 numpy
