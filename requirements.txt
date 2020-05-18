@@ -1,3 +1,5 @@
+resources
+resources.utils
 flask
 gunicorn
 numpy
@@ -9,7 +11,6 @@ nbdev
 graphviz
 fastai2
 ipykernel
-resources
 staty
 jupyter
 azure-cognitiveservices-vision-customvision
