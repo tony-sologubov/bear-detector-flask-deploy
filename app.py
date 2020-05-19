@@ -16,8 +16,8 @@ from flask import Flask, request, render_template
 import pickle
 
 # from resources.utils import *
-from fastai2.vision.widgets import *
-from fastai2.imports import *
+from fastai.vision import *
+from fastai import *
 
 import os
 
